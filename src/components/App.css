@@ -57,7 +57,7 @@ body {
 
 .panel {
 	width: 30%;
-	min-width: 25rem;
+	min-width: 22rem;
 	max-width: 96vw;
 	max-height: 96vh;
 	position: absolute;
@@ -83,7 +83,7 @@ h1.welcome-text{
 	justify-content: space-between;
 }
 
-header .editable-item__input{
+.header .editable-item__input{
 	max-width:80%;
 	overflow-wrap: break-word;
 }
@@ -92,9 +92,8 @@ header .editable-item__input{
 .chat-window button{
 	border: none;
 	font-size: 2rem;
-	background-color: white;
-	padding: 0.3rem;
-	margin: 0.5rem;
+	background-color: transparent;
+	padding: 0.5rem;
 }
 
 .chat-window button:active{
@@ -108,6 +107,10 @@ header .editable-item__input{
 
 .chat-window button:visited{
 	border: none;
+}
+
+.chat-window input{
+	width: 98%;
 }
 
 .control .editable-item,
@@ -135,6 +138,7 @@ header .editable-item__input{
 .editable-item__input-validation{
 	display: flex;
 	flex-direction: column;
+	flex: 1 1;
 }
 
 .editable-item__error{
@@ -147,10 +151,11 @@ header .editable-item__input{
 	font-size: 1.4rem;
 }
 
-
 .chat-stream {
 	border: 1px solid #ccc;
-	height: 200px;
+	min-height: 15rem;
+	height: 50%;
+	max-height: 20vh;
 	text-align: left;
 	padding: 10px;
 	overflow-y: scroll;
