@@ -49,7 +49,7 @@ export const addReceivedPin = receivedPin => ({
 
 export function createAndJoinRoom(pinId, coordinates) {
     return async dispatch => {
-        dispatch(createRoomRequest(pinId))
+        dispatch(createRoomRequest({pinId, coordinates}))
         try{
             const response = await axios.get(
 				`api/rooms/new?lng=${coordinates.lng}&lat=${coordinates.lat}`

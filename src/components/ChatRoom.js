@@ -30,15 +30,15 @@ function ChatRoom() {
 		dispatch(changeRoomName({roomId: roomId, roomName: newName}))
 	}
 	
-	const leaveRoom = () => {
-		dispatch(leaveChatRoom())
-	}
-
-	const sendMessage = (msgInput) => {
+	const submitMessage = (msgInput) => {
 		ws.sendMessage(roomId, {
 			userName: userName || "Guest",
 			message: msgInput
 		});
+	}
+	
+	const leaveRoom = () => {
+		dispatch(leaveChatRoom())
 	}
 	
 	const validateUserName = (userInput) => (
@@ -47,22 +47,23 @@ function ChatRoom() {
 	)
 	
 	const validateMessage = (userInput) => (
-		(!userName) ? "Please type a username first" : null
+		(!userName) ? "Please submit a username first" : null
 	)
 	
     return (
 		<article className="chat-window">
-			<header className="header">
+			<header className="chat-header">
 				<EditableItem 
 					name="room name" 
 					title={roomName} 
 					open={false} 
-					onSubmitRequest={submitRoomName} 
+					maxlength="30"
+					submitRequest={submitRoomName} 
 					form="roomNameInput" 
 				/>
-				<div className="header__controls">
+				<div className="chat-header__controls">
 					<button 
-						className="header__close" 
+						className="chat-header__close" 
 						onClick={leaveRoom} 
 						aria-label="Leave chat room"
 					>
@@ -81,38 +82,41 @@ function ChatRoom() {
 			</section>
 			
 			<section className="chat-form">
-				{!userName && 
-					<EditableItem 
-						name="user name" 
-						title="Guest" 
-						open={true}
-						editIconClasses="fa fa-user-edit" form="userName" 
-						customValidator={validateUserName}
-						onSubmitRequest={submitUserName} 
-					/>
-				}
-				{userName && 
-					<EditableItem 
-						name="user name" 
-						title={userName}
-						editIconClasses="fa fa-user-edit" 
-						visibleLabel="Posting as: "
-						customValidator={validateUserName}
-						onSubmitRequest={submitUserName} 
-						form="userNameInput" 
-					/>
-				}
-				<div className="control">
+				<div className="chat-form__user-name">
+					{!userName && 
+						<EditableItem 
+							name="user name" 
+							title="Guest" 
+							open={true}
+							editIconClasses="fa fa-user-edit" form="userName" 
+							customValidator={validateUserName}
+							submitRequest={submitUserName} 
+						/>
+					}
+					{userName && 
+						<EditableItem 
+							name="user name" 
+							title={userName}
+							editIconClasses="fa fa-user-edit" 
+							visibleLabel="Posting as: "
+							maxlength="25"
+							customValidator={validateUserName}
+							submitRequest={submitUserName} 
+							form="userNameInput" 
+						/>
+					}
+				</div>
+				<div className="chat-form__message">
 					<EditableItem 
 							name="new message" 
 							open={true}
 						    alwaysOpen={true}
-							maxlength={160}
+							maxlength="500"
 							submitIconClasses="fa fa-paper-plane"
-							onSubmitRequest={sendMessage} 
+							submitRequest={submitMessage} 
 						    customValidator={validateMessage}
 							form="messageInput" 
-						/>
+					/>
 				</div>	
 			</section>
 		</article>

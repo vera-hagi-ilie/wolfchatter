@@ -78,12 +78,14 @@ h1.welcome-text{
 }
 
 
-.chat-window .header{
+
+/* .chat-window .chat-header{ */
+.chat-header{
 	display:flex;
 	justify-content: space-between;
 }
 
-.header .editable-item__input{
+.chat-header .editable-item__input{
 	max-width:80%;
 	overflow-wrap: break-word;
 }
@@ -113,21 +115,23 @@ h1.welcome-text{
 	width: 98%;
 }
 
-.control .editable-item,
-.control form{
+.chat-form__message .editable-item,
+.chat-form__message form{
 	display: flex;
 	flex: 1 1;
 	max-width: 100%;
 }
 
-.control form{
+.chat-form__message form{
 	width: 100%;
 }
 
 .editable-item__title{
 	display: inline-block;
 	margin: 0.5rem;
+	max-width: 97%;
 	overflow-wrap: break-word;
+	word-break: break-word;
 }
 
 .editable-item__input {
@@ -163,10 +167,10 @@ h1.welcome-text{
 	overflow-wrap: break-word;
 }
 
-.chat-window .control{
+.chat-form__message{
 	display:flex;
 }
 
-.chat-window .control .editable-item__input{
+.chat-form__message .editable-item__input{
 	flex: 1;
 }

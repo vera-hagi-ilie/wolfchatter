@@ -13,7 +13,8 @@ const EditableItem = props => {
 	
 	const handleInputSubmit	= (input) => {	
 		if (input && input.trim()){
-			props.onSubmitRequest(input.slice(0, props.maxlength || 20))
+			props.submitRequest(input.trim())
+			
 			if (!props.alwaysOpen ){
 				close()
 			}
@@ -57,6 +58,7 @@ const EditableItem = props => {
 			<>
 				<EditItemForm form={props.form} 
 					          name={props.name} 
+							  maxlength={props.maxlength}
 					          submitIconClasses={props.submitIconClasses}
 							  customValidator={props.customValidator}	
 							  onInputSubmit={handleInputSubmit}/>
@@ -79,10 +81,10 @@ EditableItem.propTypes = {
 	submitIconClasses: PropTypes.string,
 	open: PropTypes.bool,
 	alwaysOpen: PropTypes.bool,
-	maxlength:PropTypes.number,
+	maxlength: PropTypes.string,
 	visibleLabel: PropTypes.string,
 	customValidator: PropTypes.func,
-	onSubmitRequest: PropTypes.func.isRequired
+	submitRequest: PropTypes.func.isRequired
 }
 
 

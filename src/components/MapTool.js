@@ -87,7 +87,7 @@ class MapTool {
 		
 		const marker = this.addMarkerByIdAndCoordinates(pinId, coordinates)
 		this.ownPins[marker.pinId] = marker
-		
+			
 		this.configuration.onClickOnMapCallback(pinId, coordinates)
 	}
 	
