@@ -12,19 +12,17 @@ const initialState = {
 
 
 const chatRoomReducer = (state = initialState, action) => {
-    switch(action.type){
-			
+    switch(action.type){	
         case JOIN_ROOM_SUCCESS:
             return ({ roomId: action.payload.id, 
 					  roomName: action.payload.name, 
 					  chatLog: action.payload.chats })
 			
 		case UPDATE_CHAT_LOG:
-			if(state.roomId !== null && action.update.roomId === state.roomId){
-              return {...state, chatLog: [...(state.chatLog), action.update.data]};
+			if(state.roomId !== null && action.payload.roomId === state.roomId){
+              return {...state, chatLog: [...(state.chatLog), action.payload.data]}
 			}
 			return state
-			
 			
 		case CHANGE_ROOM_NAME:
 			if(state.roomId !== null && action.payload.roomId === state.roomId){
@@ -33,7 +31,7 @@ const chatRoomReducer = (state = initialState, action) => {
 			return state
 			
 		case LEAVE_CHAT_ROOM:
-			return initialState;
+			return initialState
 
 		default:
 			return state

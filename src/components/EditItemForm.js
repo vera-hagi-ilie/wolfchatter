@@ -43,9 +43,7 @@ const EditItemForm = props => {
 					maxlength={props.maxlength || defaultInputMaxlength}
 					placeholder={`Type a ${nameText}`}
 				/>
-			
 			</div>
-			
 			
 			<button 
 				className="editable-item__edit" 

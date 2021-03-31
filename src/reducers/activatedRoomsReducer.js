@@ -1,4 +1,4 @@
-import {SET_USERNAME} from '../actions/chatRoomActions';
+import { SET_USERNAME } from '../actions/chatRoomActions';
 
 const activatedRoomsReducer = (state = {}, action) => {
     switch(action.type){

@@ -1,9 +1,10 @@
-import {useEffect, useRef, useContext} from "react"
-import MapTool from "./MapTool"
-import {useSelector, useDispatch } from 'react-redux'
+import { useEffect, useRef, useContext } from "react"
+import { useSelector, useDispatch } from 'react-redux'
 import { WebSocketContext } from '../websocket/webSocket';
 import { createAndJoinRoom, fetchPinList } from '../actions/pinActions';
-import {joinRoom } from '../actions/chatRoomActions'
+import { joinRoom } from '../actions/chatRoomActions'
+import MapTool from "./MapTool"
+import './styles/Map.css'
 
 
 const Map = props => {

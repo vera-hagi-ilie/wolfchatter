@@ -1,10 +1,12 @@
 import React, { useContext } from 'react'
-import {useSelector, useDispatch } from 'react-redux'
-import {reset} from 'redux-form';
+import { useSelector, useDispatch } from 'react-redux'
+import { reset } from 'redux-form';
 import _ from "lodash"
 import { WebSocketContext } from '../websocket/webSocket';
-import {setUsername, leaveChatRoom, changeRoomName} from '../actions/chatRoomActions'
+import { SET_USERNAME, CHANGE_ROOM_NAME, LEAVE_CHAT_ROOM } from '../actions/chatRoomActions'
+import { actionCreator } from '../actions/genericActions'
 import EditableItem from "./EditableItem"
+import './styles/ChatRoom.css'
 
 function ChatRoom() {
 
@@ -21,13 +23,13 @@ function ChatRoom() {
 
 	
 	const submitUserName = userInput => {
-		dispatch(setUsername({userName: userInput, chatRoomId: roomId}))
+		dispatch(actionCreator(SET_USERNAME, {userName: userInput, chatRoomId: roomId}))
 		dispatch(reset("messageInput"))
 	}
 	
 	const submitRoomName = newName => {
 		ws.sendRoomName(roomId, newName)
-		dispatch(changeRoomName({roomId: roomId, roomName: newName}))
+		dispatch(actionCreator(CHANGE_ROOM_NAME, {roomId: roomId, roomName: newName}))
 	}
 	
 	const submitMessage = (msgInput) => {
@@ -38,7 +40,7 @@ function ChatRoom() {
 	}
 	
 	const leaveRoom = () => {
-		dispatch(leaveChatRoom())
+		dispatch(actionCreator(LEAVE_CHAT_ROOM, null))
 	}
 	
 	const validateUserName = (userInput) => (
@@ -108,14 +110,14 @@ function ChatRoom() {
 				</div>
 				<div className="chat-form__message">
 					<EditableItem 
-							name="new message" 
-							open={true}
-						    alwaysOpen={true}
-							maxlength="500"
-							submitIconClasses="fa fa-paper-plane"
-							submitRequest={submitMessage} 
-						    customValidator={validateMessage}
-							form="messageInput" 
+						name="new message" 
+						open={true}
+						alwaysOpen={true}
+						maxlength="500"
+						submitIconClasses="fa fa-paper-plane"
+						submitRequest={submitMessage} 
+						customValidator={validateMessage}
+						form="messageInput" 
 					/>
 				</div>	
 			</section>

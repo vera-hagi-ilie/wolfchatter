@@ -1,0 +1,40 @@
+#map {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.leaflet-container{
+  cursor: auto;
+}
+
+.marker-icon{
+	font-size: 4rem;
+	text-align: center;
+	line-height: 40px;
+	color: #2b4645;
+}
+
+.marker-icon:hover,
+.marker-icon:focus{
+	color: #1b2523;
+}
+
+.fa-map-marker{
+	text-shadow: 0 -1px #fff, 1px 1px #fff;	
+}
+
+.marker-icon:hover .fa-map-marker,
+.marker-icon:focus .fa-map-marker{
+	transform: translateY(-2px);
+}
+
+.marker-icon.marker-icon--highlighted{
+	color: red;
+	text-shadow: 1px 1px black;
+}
+
+.marker-icon.marker-icon--highlighted:hover .fa-map-marker,
+.marker-icon.marker-icon--highlighted:focus .fa-map-marker{
+	transform: translateY(0px);
+}

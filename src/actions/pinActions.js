@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {joinRoom} from "./chatRoomActions"
+import { actionCreator } from './genericActions'
+import { joinRoom } from "./chatRoomActions"
 
 
 export const CREATE_ROOM_REQUEST = "CREATE_ROOM_REQUEST"
@@ -11,66 +12,36 @@ export const FETCH_PIN_LIST_ERROR = "FETCH_PIN_LIST_ERROR"
 export const ADD_RECEIVED_PIN = "ADD_RECEIVED_PIN"
 
 
-export const createRoomRequest = payload => ({
-	type: CREATE_ROOM_REQUEST,
-	payload 
-})
-
-export const createRoomSuccess = payload => ({
-	type: CREATE_ROOM_SUCCESS,
-	payload
-})
-
-export const createRoomError = error => ({
-	type: CREATE_ROOM_ERROR,
-	error
-})
-
-export const fetchPinListRequest = () => ({
-	type: FETCH_PIN_LIST_REQUEST
-})
-
-export const fetchPinListSuccess = payload => ({
-	type: FETCH_PIN_LIST_SUCCESS,
-	payload
-})
-
-export const fetchPinListError = error => ({
-	type: FETCH_PIN_LIST_ERROR,
-	error
-})
-
-export const addReceivedPin = receivedPin => ({ 
-	type: ADD_RECEIVED_PIN,
-	payload: receivedPin
-})
-
-
-
 export function createAndJoinRoom(pinId, coordinates) {
     return async dispatch => {
-        dispatch(createRoomRequest({pinId, coordinates}))
+		
+        dispatch(actionCreator(CREATE_ROOM_REQUEST, {pinId, coordinates}))
+		
         try{
             const response = await axios.get(
 				`api/rooms/new?lng=${coordinates.lng}&lat=${coordinates.lat}`
 			)
 			const chatRoomId = response.data
-            await dispatch(createRoomSuccess({pinId, coordinates, chatRoomId}));
+            await dispatch(actionCreator(CREATE_ROOM_SUCCESS, {pinId, coordinates, chatRoomId}));
 			dispatch(joinRoom(pinId)); 
+			
         }catch(error){
-            dispatch(createRoomError(error));
+            dispatch(actionCreator(CREATE_ROOM_ERROR, error));
         }
     }
 }
 
 export function fetchPinList () {
     return async dispatch => {
-        dispatch(fetchPinListRequest())
+		
+        dispatch(actionCreator(FETCH_PIN_LIST_REQUEST, null))
+		
         try{
 			const response = await axios.get(`api/rooms/`)
-            dispatch(fetchPinListSuccess(response.data))
+            dispatch(actionCreator(FETCH_PIN_LIST_SUCCESS, response.data))
+			
         }catch(error){
-            dispatch(fetchPinListError(error))
+            dispatch(actionCreator(FETCH_PIN_LIST_ERROR, error))
         }
     }
 }

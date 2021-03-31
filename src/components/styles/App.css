@@ -1,0 +1,15 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html,
+body {
+  height: 100%;
+  font-size: 62.5%; /* 1rem = 10px with default browser setting of 16px */
+  box-sizing: border-box;
+  position: relative;
+}
+
+ 

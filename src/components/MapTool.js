@@ -1,7 +1,9 @@
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid"
+import _ from "lodash"
+import { stamenAttribution } from "../texts/mapTexts"
 
 const L = window.L
-const stamenAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+
 
 class MapTool {
 	constructor(){
@@ -108,45 +110,32 @@ class MapTool {
 			let newMarker = this.ownPins[this.currentPinId] || this.othersPins[this.currentPinId]
 			newMarker.setIcon(this.fontAwesomeIcon("highlighted"))
 		}
-		
 	}
+
 	
 	initialize = (config) =>{
-		
 		if (!this.map){
 			this.configuration.onClickOnMapCallback = config && config.onClickOnMapCallback
 			this.configuration.pinClickCallback = config && config.pinClickCallback
 			
 			const mapOptions = config && config.mapOptions
 			this.map = this.createMap("map", mapOptions)  
-			this.createTileLayer("watercolor").addTo(this.map);
+			this.createTileLayer("watercolor").addTo(this.map)
 			this.map.on("click", this.addMarkerOnMapClick )
+			this.initialized = true
 		}
 	}
 	
 	render = (pins) => {
-		
 		const pinsToBeRendered = {...pins}
-		const pinsToBeRemovedById = []
+		const pinsToBeRemovedById = _.difference(Object.keys(this.othersPins), Object.keys(pinsToBeRendered))
+		const pinsToBeAddedById = _.difference(Object.keys(pinsToBeRendered), Object.keys(this.othersPins))
 		
-		//Go through the pins that are already rendered
-		Object.keys(this.othersPins).forEach(keyInLocalPins => {
-			if (pinsToBeRendered[keyInLocalPins]){
-				//pin is already rendered and it has to remain, remove it from pinsToBeRendered
-				delete pinsToBeRendered[keyInLocalPins]
-			} else{
-				//pin is currently rendered but has to be removed, add it to trash
-				pinsToBeRemovedById.push(this.othersPins[keyInLocalPins].pinId)
-			}
-		})
-		
-		//Empty trash: remove from map pins that are no longer needed
 		pinsToBeRemovedById.forEach(id => this.removeMarkerById(id))
-		
-		//The pins that remained in pinsToBeRendered do not yet exist on map and they must be added
-		Object.keys(pinsToBeRendered).forEach(keyInPinsToBeRendered => {
-			let pinId = pinsToBeRendered[keyInPinsToBeRendered].pinId
-			let coordinates = pinsToBeRendered[keyInPinsToBeRendered].coordinates
+				
+		pinsToBeAddedById.forEach(id => {
+			let pinId = pinsToBeRendered[id].pinId
+			let coordinates = pinsToBeRendered[id].coordinates
 			
 			let marker = this.addMarkerByIdAndCoordinates(pinId, coordinates)
 			this.othersPins[marker.pinId] = marker

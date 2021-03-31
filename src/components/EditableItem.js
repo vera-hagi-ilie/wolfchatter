@@ -34,15 +34,11 @@ const EditableItem = props => {
 			{(!isOpen) &&
 			<>
 				{props.visibleLabel && 
-					<label 
-						for={props.name} 
-						className="editable-item__label">
-							{props.visibleLabel}
+					<label for={props.name} className="editable-item__label">
+						{props.visibleLabel}
 					</label>
 				}
-				<h3 name={props.name} 
-					className="editable-item__title"
-				>
+				<h3 name={props.name} className="editable-item__title">
 				 	{props.title}
 			 	</h3>
 				<button 
@@ -56,12 +52,14 @@ const EditableItem = props => {
 			}
 			{isOpen &&
 			<>
-				<EditItemForm form={props.form} 
-					          name={props.name} 
-							  maxlength={props.maxlength}
-					          submitIconClasses={props.submitIconClasses}
-							  customValidator={props.customValidator}	
-							  onInputSubmit={handleInputSubmit}/>
+				<EditItemForm
+					form={props.form} 
+					name={props.name} 
+					maxlength={props.maxlength}
+					submitIconClasses={props.submitIconClasses}
+					customValidator={props.customValidator}	
+					onInputSubmit={handleInputSubmit}
+				/>
 			</>
 			}
 		</div>

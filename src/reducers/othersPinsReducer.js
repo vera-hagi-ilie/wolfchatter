@@ -1,5 +1,5 @@
-import {v4 as uuidv4} from "uuid"
-import {FETCH_PIN_LIST_SUCCESS, ADD_RECEIVED_PIN} from '../actions/pinActions';
+import { v4 as uuidv4 } from "uuid"
+import { FETCH_PIN_LIST_SUCCESS, ADD_RECEIVED_PIN } from '../actions/pinActions';
 
 
 const othersPinsReducer = (state = {}, action) => {
@@ -10,9 +10,12 @@ const othersPinsReducer = (state = {}, action) => {
 				const pinId = uuidv4()
 				othersPins[pinId] = {...pin, pinId}
 			})
+			
 			return othersPins
+			
 		case ADD_RECEIVED_PIN:
 			const pinId = uuidv4()
+			
 			return {...state, [pinId]: {...(action.payload), pinId} }
 
 		default:

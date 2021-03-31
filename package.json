@@ -24,12 +24,11 @@
     "redux-thunk": "^2.3.0",
     "socket.io": "^4.0.0",
     "socket.io-client": "^4.0.0",
-    "uuid": "^8.3.2",
-    "web-vitals": "^1.1.1"
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "react-start": "react-scripts start",
-	"start": "node server.js",
+    "start": "node server.js",
     "build": "react-scripts build"
   },
   "eslintConfig": {

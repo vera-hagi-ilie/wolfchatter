@@ -1,8 +1,9 @@
 import React, { createContext } from 'react'
 import io from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { updateChatLog, changeRoomName } from '../actions/chatRoomActions';
-import { addReceivedPin } from '../actions/pinActions';
+import { actionCreator } from '../actions/genericActions'
+import { UPDATE_CHAT_LOG, CHANGE_ROOM_NAME } from '../actions/chatRoomActions';
+import { ADD_RECEIVED_PIN } from '../actions/pinActions';
 
 const WebSocketContext = createContext(null)
 
@@ -19,17 +20,17 @@ const WebSocketProvider = ({ children }) => {
             roomId: roomId,
             data: message
         }
-        socket.emit("event://send-message", JSON.stringify(payload));
-        dispatch(updateChatLog(payload));
+        socket.emit("event://send-message", JSON.stringify(payload));		
+		dispatch(actionCreator(UPDATE_CHAT_LOG, payload));
     }
 	
 	const sendRoomName = (roomId, roomName) => {
-		const payload = {roomId, roomName}
+		const payload = { roomId, roomName }
 		socket.emit("event://send-room-name", JSON.stringify(payload))
 	}
 		
 	const sendNewPin = (coordinates, chatRoomId) => {
-        const payload = { coordinates, chatRoomId}
+        const payload = { coordinates, chatRoomId }
         socket.emit("event://send-new-pin", JSON.stringify(payload));
     }
 
@@ -37,22 +38,22 @@ const WebSocketProvider = ({ children }) => {
 		socket = io()
 
         socket.on("event://get-message", (msg) => {
-            const payload = JSON.parse(msg);
-            dispatch(updateChatLog(payload));
+            const payload = JSON.parse(msg)
+			dispatch(actionCreator(UPDATE_CHAT_LOG, payload));
         })
 		
 		socket.on("event://get-room-name", (msg) => {
-			const payload = JSON.parse(msg);
-			dispatch(changeRoomName(payload));
+			const payload = JSON.parse(msg)			
+			dispatch(actionCreator(CHANGE_ROOM_NAME, payload));
 		})
 		
 		socket.on("event://receive-new-pin", (msg) => {
-            const payload = JSON.parse(msg);
-            dispatch(addReceivedPin(payload));
+            const payload = JSON.parse(msg)
+			dispatch(actionCreator(ADD_RECEIVED_PIN, payload));
         })
 
         ws = {
-            socket: socket,
+            socket,
             sendMessage,
 			sendNewPin,
 			sendRoomName
